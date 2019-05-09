@@ -15,23 +15,12 @@ class App extends React.Component {
       form2: false,
       form3: false,
       confirmation: false,
-      checkOutData: {
-        name: '',
-        email: '',
-        password: '',
-        address1: '',
-        address2: '',
-        city: '',
-        state: '',
-        zip: '',
-        phone: '',
-        creditCard: '',
-        expDate: '',
-        CVV: '',
-        billingZip: ''
-      }
     };
     this.displayForm1 = this.displayForm1.bind(this);
+    this.displayForm2 = this.displayForm2.bind(this);
+    this.displayForm3 = this.displayForm3.bind(this);
+    this.displayConfirmation = this.displayConfirmation.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   displayForm1(event) {
@@ -78,11 +67,19 @@ class App extends React.Component {
     event.preventDefault();
   }
 
+  handleChange(event) {
+    this.setState({
+      event.target.name: event.target.value 
+    });  
+    event.preventDefault();
+  }
 
+
+
+  //======================  RENDER  ================================
 
   render() {
     if (this.state.home === true) {
-    
       return (
         <div>
           <h2 class='header'>Shopping List</h2>
@@ -92,26 +89,58 @@ class App extends React.Component {
         </div>
       );
     }
-
     if (this.state.form1 === true) {
-    
-      return (
-        <div>
-          <h2 class='header'>Create an Account</h2>
-          <form onSubmit={(event) => this.displayForm2(event)}>
-            Name: <input type='text'/><br></br>
-            Emal: <input type='text'/><br></br>
-            Password: <input type='text'/><br></br>
-            <input type='submit' value='Next'/>
-          </form>
-        </div>
-      );
+      return (<AcctInfo />)
     }
-
     if (this.state.form2 === true) {
-    
-      return (
-        <div>
+      return (<AddressInfo />);
+    }
+    if (this.state.form3 === true) {
+      return (<PaymentInfo />);
+    }  
+    if (this.state.confirmation === true) {
+      return (<Confirmation />);
+    }  
+  }
+}
+class AcctInfo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      email: '',
+      password: ''
+    };
+  }
+  render() {
+    return (
+      <div>
+        <h2 class='header'>Create an Account</h2>
+        <form onSubmit={(event) => this.displayForm2(event)}>
+          Name: <input name='name' type='text' value={this.state.name} onChange={this.handleChange}/><br></br>
+          Email: <input name='email' type='text' value={this.state.email} onChange={this.handleChange}/><br></br>
+          Password: <input name='password' type='text' value={this.state.password} onChange={this.handleChange}/><br></br>
+          <input type='submit' value='Next'/>
+        </form>
+      </div>
+    );
+  }
+}
+class AddressInfo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      address1: '',
+      address2: '',
+      city: '',
+      state: '',
+      zip: '',
+      phone: ''
+    };
+  }
+  render() {
+    return (
+      <div>
           <h2 class='header'>Enter Address</h2>
           <form onSubmit={(event) => this.displayForm3(event)}>
             Address: <input type='text'/><br></br>
@@ -123,13 +152,22 @@ class App extends React.Component {
             <input type='submit' value='Next'/>
           </form>
         </div>
-      );
-    }
-
-    if (this.state.form3 === true) {
-    
-      return (
-        <div>
+    );
+  }
+}
+class PaymentInfo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      creditCardNumber: '',
+      expiryDate: '',
+      CVV: '',
+      billingZipCode: ''
+    };
+  }
+  render() {
+    return (
+      <div>
           <h2 class='header'>Enter Credit Card</h2>
           <form onSubmit={(event) => this.displayConfirmation(event)}>
             Credit Card Number: <input type='text'/><br></br>
@@ -139,26 +177,29 @@ class App extends React.Component {
             <input type='submit' value='Next'/>
           </form>
         </div>
-      );
-    }  
-
-    if (this.state.confirmation === true) {
-    
-      return (
-        <div>
-          <h2 class='header'>Confirm Your Order</h2>
-          <form>
-            Order Summary: <br></br>
-            Item 1 <br></br>
-            Item 2 <br></br>
-            Item 3 <br></br>
-            <input type='submit' value='Purchase'/>
-          </form>
-        </div>
-      );
-    }  
-
+    );
   }
 }
+class Confirmation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+  render() {
+    return (
+      <div>
+        <h2 class='header'>Confirm Your Order</h2>
+        <form>
+          Order Summary: <br></br>
+          Item 1 <br></br>
+          Item 2 <br></br>
+          Item 3 <br></br>
+          <input type='submit' value='Purchase'/>
+        </form>
+      </div>
+    );
+  }
+}
+
 
 ReactDOM.render(<App />, document.getElementById('root'));
