@@ -1,5 +1,6 @@
 // Use MongoDB or MySQL to store your user data
 // Build your Express app inside server.js
+const db = require('./db');
 
 const express = require('express');
 const app = express();
