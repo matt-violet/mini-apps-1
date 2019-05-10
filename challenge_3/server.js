@@ -1,8 +1,10 @@
 // Use MongoDB or MySQL to store your user data
 // Build your Express app inside server.js
-const db = require('./db');
 
+// import connection obj
+const db = require('./db');
 const express = require('express');
+
 const app = express();
 const port = 3000;
 
@@ -10,8 +12,8 @@ const port = 3000;
 
 //app.post('/', (req, res) => res.send('POST request to the homepage'));
 
+
 // serve index.html and associated files
 app.use('/', express.static('public'));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-
